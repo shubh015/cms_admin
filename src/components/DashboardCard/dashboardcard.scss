@@ -1,0 +1,18 @@
+.dashboard_card {
+  overflow: hidden;
+  &:hover {
+    color: white;
+    background-color: #4e44b5;
+    .CircularProgressbar-text {
+      fill: white !important;
+    }
+
+    .bottom_info {
+      background-color: #584cb8;
+    }
+
+    .CircularProgressbar .CircularProgressbar-path {
+      stroke: white;
+    }
+  }
+}

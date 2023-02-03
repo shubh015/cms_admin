@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { RiDashboardFill, RiAdminFill } from "react-icons/ri";
+import logo from "../../assets/image/logo.png";
 
 export default function Sidebar() {
   return (
@@ -10,7 +11,7 @@ export default function Sidebar() {
       >
         <div className="space-y-3">
           <div className="flex items-center justify-between">
-            <h2 className="text-xl font-bold text-white">Logo</h2>
+            <img className="w-100" style={{height: '2.5rem'}} src={logo} alt="cms" />
           </div>
           <div className="flex-1">
             <ul className="pt-2 pb-4 space-y-1 text-sm">
