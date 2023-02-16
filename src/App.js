@@ -14,7 +14,7 @@ function App() {
   return (
     <div className="dashboard_wrp flex font-[Poppins]">
       <Sidebar />
-      <div className="flex-1 bg-[#edf0ff]">
+      <div className="flex-1 overflow-hidden bg-[#edf0ff]">
         <Header />
         <Routes>
           <Route path="" element={<Dashboard />} />

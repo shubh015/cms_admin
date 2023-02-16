@@ -58,7 +58,7 @@ const FormData = ({ type }) => {
   }, []);
 
   return (
-    <div className="overflow-hidden w-[95%] bg-white mt-10 mx-auto overflow-x-auto rounded-lg border border-gray-200">
+    <div className="overflow-hidden w-[90%] bg-white mt-10 mx-auto overflow-x-auto rounded-lg border border-gray-200">
       <table className="min-w-full divide-y divide-gray-100 text-sm">
         <thead className="bg-gray-100">
           <tr className="font-medium text-left text-darken">
@@ -80,9 +80,13 @@ const FormData = ({ type }) => {
           </tr>
         </thead>
         <tbody className="divide-y divide-gray-200 text-muted">
-          {data.map((item, ind) => (
-            <TableRow item={item} key={new Date().getTime() + ind} />
-          ))}
+          {data.map((item, ind) => {
+            if (item.paymentConfirmation) {
+              return <TableRow item={item} key={new Date().getTime() + ind} />;
+            }
+
+            return <></>;
+          })}
         </tbody>
       </table>
     </div>
