@@ -1,8 +1,17 @@
 import React from "react";
 import { useState } from "react";
-
+import { AiOutlineCheck } from "react-icons/ai";
+import { AiOutlineDownload } from "react-icons/ai";
+import { useDispatch } from "react-redux";
+import { Link } from "react-router-dom";
+import { setForm } from "../../redux/features/ApplicationFormSlice";
+import PreviewForm from "../PreviewForm";
 const TableRow = ({ item }) => {
   const [isSelected, setIsSelected] = useState(false);
+  const dispatch = useDispatch();
+  const handleApplication = (item) => {
+    dispatch(setForm(item));
+  };
 
   return (
     <tr
@@ -40,7 +49,16 @@ const TableRow = ({ item }) => {
         {item.designation || "Teacher"}
       </td>
       <td className="whitespace-nowrap px-4 py-3 ">{item.total_experience}</td>
-      <td className="whitespace-nowrap px-4 py-3 ">Delete</td>
+      <td className="whitespace-nowrap px-4 py-3 ">
+        <div>
+          <button className="">
+            <AiOutlineCheck className="h-5 w-5" />
+          </button>
+          <Link onClick={() => handleApplication(item)} to="/previewForm">
+            <AiOutlineDownload className="h-5 w-5" />
+          </Link>
+        </div>
+      </td>
     </tr>
   );
 };

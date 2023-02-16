@@ -6,7 +6,7 @@ import rootReducer from "./rootReducer";
 const persistConfig = {
   key: "cms_admin",
   storage,
-  blacklist: ["loader", "category"],
+  blacklist: ["loader", "category", "application"],
 };
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

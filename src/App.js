@@ -4,6 +4,7 @@ import Header from "./components/Header";
 import Dashboard from "./components/Dashboard";
 import { Navigate, Route, Routes } from "react-router-dom";
 import FormData from "./components/FormData";
+import PreviewForm from "./components/PreviewForm";
 import { useSelector } from "react-redux";
 
 function App() {
@@ -19,6 +20,8 @@ function App() {
         <Routes>
           <Route path="" element={<Dashboard />} />
           <Route path="applicants" element={<FormData type="applicants" />} />
+          <Route path="previewForm" element={<PreviewForm />} />
+
           <Route path="shortlisted" element={<FormData type="shortlisted" />} />
           <Route path="admin" element={<>Admin</>} />
         </Routes>
