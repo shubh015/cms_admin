@@ -81,11 +81,11 @@ const FormData = ({ type }) => {
         </thead>
         <tbody className="divide-y divide-gray-200 text-muted">
           {data.map((item, ind) => {
-            if (item.paymentConfirmation) {
-              return <TableRow item={item} key={new Date().getTime() + ind} />;
-            }
+            // if (item.paymentConfirmation) {
+            return <TableRow item={item} key={item._id} />;
+            // }
 
-            return <></>;
+            // return <></>;
           })}
         </tbody>
       </table>
