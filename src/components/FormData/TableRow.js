@@ -1,16 +1,28 @@
 import React from "react";
 import { useState } from "react";
+import toast from "react-hot-toast";
 import { AiOutlineCheck } from "react-icons/ai";
 import { AiOutlineDownload } from "react-icons/ai";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import { candidateShortlist } from "../../api/Dashboard";
 import { setForm } from "../../redux/features/ApplicationFormSlice";
 import PreviewForm from "../PreviewForm";
+
 const TableRow = ({ item }) => {
   const [isSelected, setIsSelected] = useState(false);
+  const token = useSelector((state) => state.auth.token);
   const dispatch = useDispatch();
   const handleApplication = (item) => {
     dispatch(setForm(item));
+  };
+
+  const handleShortlist = async (id) => {
+    const res = await candidateShortlist(id, token);
+    console.log(res);
+    if (res?.status === 200) {
+      toast.success(res.data.msg);
+    }
   };
 
   return (
@@ -51,9 +63,13 @@ const TableRow = ({ item }) => {
       <td className="whitespace-nowrap px-4 py-3 ">{item.total_experience}</td>
       <td className="whitespace-nowrap px-4 py-3 ">
         <div>
-          <button className="">
-            <AiOutlineCheck className="h-5 w-5" />
-          </button>
+          {!item.isShortlisted ? (
+            <button onClick={() => handleShortlist(item._id)} className="">
+              <AiOutlineCheck className="h-5 w-5" />
+            </button>
+          ) : (
+            <></>
+          )}
           <Link onClick={() => handleApplication(item)} to="/previewForm">
             <AiOutlineDownload className="h-5 w-5" />
           </Link>

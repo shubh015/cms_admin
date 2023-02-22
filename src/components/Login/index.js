@@ -3,9 +3,10 @@ import { useFormik } from "formik";
 import * as Yup from "yup";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
+import toast from "react-hot-toast";
 import { useDispatch } from "react-redux";
 import { setToken } from "../../redux/features/AuthSlice";
-import colorlogo from '../../assets/image/color-logo.jpg'
+import colorlogo from "../../assets/image/color-logo.jpg";
 
 export default function Login() {
   const navigate = useNavigate();
@@ -17,6 +18,7 @@ export default function Login() {
 
     if (res?.status === 200) {
       dispatch(setToken(res.data.token));
+      toast.success(res.data.msg || "Successfully LoggedIn!");
       navigate("/");
     }
   };
