@@ -12,6 +12,7 @@ const Header = () => {
         <HiBell />
       </div>
       <div className="icon text-2xl text-gray-400">
+        
         <HiUserCircle />
       </div>
     </div>

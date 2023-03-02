@@ -25,6 +25,7 @@
     "react-to-print": "^2.14.11",
     "redux-persist": "^6.0.0",
     "sass": "^1.57.1",
+    "tw-elements": "^1.0.0-beta1",
     "web-vitals": "^2.1.4",
     "yup": "^0.32.11"
   },
