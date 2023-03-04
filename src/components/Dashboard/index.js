@@ -47,7 +47,7 @@ const Dashboard = () => {
         </div>
       </div>
 
-      <div class="flex justify-center items-center h-3/4 gap-10 px-4">
+      <div class="flex justify-center items-center h-3/4 gap-10 px-4 pt-8">
         <DashboardCard
           to="/applicants"
           title="Applicants"
@@ -58,7 +58,7 @@ const Dashboard = () => {
           title="Shortlisted"
           value={cardData[1]?.data?.shortlistedAplications || 0}
         />
-        <DashboardCard to="/interviewed" title="Interviewed" value={97} />
+        <DashboardCard to="/interviewed" title="Interviewed" value={0} />
       </div>
     </div>
   );

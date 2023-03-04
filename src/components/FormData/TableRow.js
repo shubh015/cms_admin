@@ -8,6 +8,8 @@ import { Link } from "react-router-dom";
 import { candidateShortlist } from "../../api/Dashboard";
 import { setForm } from "../../redux/features/ApplicationFormSlice";
 import PreviewForm from "../PreviewForm";
+import { IoCallOutline } from "react-icons/io5";
+import { GoMail } from "react-icons/go";
 
 const TableRow = ({ item }) => {
   const [isSelected, setIsSelected] = useState(false);
@@ -39,7 +41,7 @@ const TableRow = ({ item }) => {
           onClick={() => setIsSelected(!isSelected)}
         />
       </td>
-      <td className="whitespace-nowrap px-4 py-5 flex gap-2 items-center justify-start">
+      <td className="text-center py-5 flex gap-2 items-center justify-start">
         <img
           src={item.personal_details.image}
           alt="user"
@@ -47,29 +49,37 @@ const TableRow = ({ item }) => {
         />
         {`${item.personal_details.first_name} ${item.personal_details.middle_name} ${item.personal_details.last_name}`}
       </td>
-      <td className="whitespace-nowrap px-4 py-3 ">{item?.registrationNum}</td>
-      <td className="whitespace-nowrap px-4 py-3 ">
+      <td className="text-center py-3 text-violet-500 font-medium">
+        {item?.registrationNum}
+      </td>
+      <td className="text-center py-3 text-gray-400">
         {new Date(item.updatedAt).toISOString().slice(0, 10)}
       </td>
-      <td className="whitespace-nowrap px-4 py-3 ">
-        {item.personal_details.mobile}
+      {/* {item.personal_details.mobile} */}
+      <td className="text-center py-3 ">
+        <div className="flex w-full items-center justify-center gap-2">
+          <a
+            className="w-8 h-8 flex items-center justify-center rounded-full bg-violet-200"
+            href={`tel:${item.personal_details.mobile}`}
+          >
+            <IoCallOutline className="text-violet-700 text-lg" />
+          </a>
+          <a
+            className="w-8 h-8 flex items-center justify-center rounded-full bg-violet-200"
+            href={`mailto:${item.personal_details.email}`}
+          >
+            <GoMail className="text-violet-700 text-lg" />
+          </a>
+        </div>
       </td>
-      <td className="whitespace-nowrap px-4 py-3 capitalize">
-        {item.category}
-      </td>
-      <td className="whitespace-nowrap px-4 py-3 ">
-        {item.designation || "Teacher"}
-      </td>
-      <td className="whitespace-nowrap px-4 py-3 ">{item.total_experience}</td>
-      <td className="whitespace-nowrap px-4 py-3 ">
-        <div>
-          {!item.isShortlisted ? (
-            <button onClick={() => handleShortlist(item._id)} className="">
-              <AiOutlineCheck className="h-5 w-5" />
-            </button>
-          ) : (
-            <></>
-          )}
+      <td className="text-center py-3 capitalize">{item.category}</td>
+      <td className="text-center py-3 ">{item.designation || "Teacher"}</td>
+      <td className="text-center py-3 ">{item.total_experience} month</td>
+      <td className="text-center py-3 ">
+        <div className="flex gap-2">
+          <button className="">
+            <AiOutlineCheck className="h-5 w-5" />
+          </button>
           <Link onClick={() => handleApplication(item)} to="/previewForm">
             <AiOutlineDownload className="h-5 w-5" />
           </Link>

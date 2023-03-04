@@ -2,22 +2,25 @@ import axios from "axios";
 const baseUrl = process.env.REACT_APP_URL;
 axios.defaults.baseURL = baseUrl;
 
-export const getApplications = async (token, type) => {
+export const getApplications = async (token, type, pageNumber, pageSize) => {
   try {
     let res;
 
     if (type === "applicants") {
-      res = axios.get(`/admin/all-applicants-list`, {
+      res = axios.get(`/admin/all-applicants-list/${pageNumber}/${pageSize}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
       });
     } else {
-      res = axios.get(`/admin/all-shortlisted-applicants-list`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      res = axios.get(
+        `/admin/all-shortlisted-applicants-list/${pageNumber}/${pageSize}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
     }
 
     return res;

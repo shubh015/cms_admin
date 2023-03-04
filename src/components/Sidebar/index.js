@@ -6,18 +6,16 @@ import { useDispatch } from "react-redux";
 import { removeToken } from "../../redux/features/AuthSlice";
 
 export default function Sidebar() {
-
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
 
   const handleLogout = () => {
-    dispatch(removeToken())
-    
-  }
+    dispatch(removeToken());
+  };
 
   return (
     <div className="flex">
       <div
-        className={` w-60 flex flex-col h-screen p-3 bg-[#4241ff] shadow duration-300`}
+        className={` w-60 flex flex-col p-3 bg-[#4241ff] shadow duration-300`}
       >
         <div className="space-y-3">
           <div className="flex items-center justify-between">
@@ -49,7 +47,10 @@ export default function Sidebar() {
                 </Link>
               </li>
               <li className="rounded-sm">
-                <span onClick={handleLogout} className="flex items-center p-2 cursor-pointer text-white space-x-3 rounded-md">
+                <span
+                  onClick={handleLogout}
+                  className="flex items-center p-2 cursor-pointer text-white space-x-3 rounded-md"
+                >
                   <RiLogoutBoxLine className="text-2xl text-white" />
                   <span className="text-white text-lg">Logout</span>
                 </span>
