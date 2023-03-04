@@ -2,13 +2,12 @@ import React from "react";
 // import "../page/Home.css";
 import { useSelector } from "react-redux";
 
-
 const Search = () => {
   const posts = useSelector((state) => state);
 
   return (
     <>
-      <div className="col gap-bt">
+      {/* <div className="col gap-bt">
         <div className="row g-0 ">
           {posts.results.search.articles?.length > 0 ? (
             posts.results.search.articles?.map((item, idx) => {
@@ -40,7 +39,7 @@ const Search = () => {
             </>
           )}
         </div>
-      </div>
+      </div> */}
     </>
   );
 };

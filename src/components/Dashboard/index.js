@@ -8,6 +8,7 @@ import axios from 'axios';
 import {useNavigate} from 'react-router-dom'
 import SearchSlice from "../../redux/features/SearchSlice";
 import DashboardCard from "../DashboardCard";
+import LowerHeader from "../LowerHeader";
 
 const Dashboard = () => {
   const token = useSelector((state) => state.auth.token);
@@ -36,7 +37,7 @@ const Dashboard = () => {
 
   return (
     <div className="dashboard_wrp h-[85%]">
-      <div className="header flex justify-between items-center mt-6 px-2">
+      {/* <div className="header flex justify-between items-center mt-6 px-2">
         <h1 className="text-3xl font-bold">Dashboard</h1>
         <div className="flex gap-4">
           <input className="outline-0 p-2 rounded-full" type="text" onClick={handleSearch} onChange={(e) => (e.target.value)}/>
@@ -45,9 +46,9 @@ const Dashboard = () => {
             Add New Applicant
           </button>
         </div>
-      </div>
-
-      <div class="flex justify-center items-center h-3/4 gap-10 px-4 pt-8">
+      </div> */}
+      <LowerHeader heading={"Dashboard"} />
+      <div class="flex justify-center items-center h-3/4 gap-10 px-4">
         <DashboardCard
           to="/applicants"
           title="Applicants"

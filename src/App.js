@@ -7,7 +7,8 @@ import FormData from "./components/FormData";
 import PreviewForm from "./components/PreviewForm";
 import { useSelector } from "react-redux";
 import Search from "./components/SearchBar";
-// import "tw-elements/TW-ELEMENTS-PATH/dist/js/index.min.js"
+import SearchPage from "./components/SearchPage";
+import "tw-elements/dist/js/index.min.js";
 function App() {
   const token = useSelector((state) => state.auth.token);
 
@@ -22,7 +23,8 @@ function App() {
           <Route path="" element={<Dashboard />} />
           <Route path="applicants" element={<FormData type="applicants" />} />
           <Route path="previewForm" element={<PreviewForm />} />
-          <Route path="/search" element={<Search />}/>
+          {/* <Route path="/search" element={<Search />}/> */}
+          <Route path="/search" element={<SearchPage />} />
           <Route path="shortlisted" element={<FormData type="shortlisted" />} />
           <Route path="admin" element={<>Admin</>} />
         </Routes>
