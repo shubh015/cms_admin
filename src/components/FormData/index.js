@@ -68,8 +68,8 @@ const FormData = ({ type }) => {
         </thead>
         {!isLoading ? (
           <tbody className="divide-y divide-gray-200 text-muted">
-            {data.map((item) => {
-              return <TableRow item={item} key={item._id} />;
+            {data.map((item, id) => {
+              return <TableRow item={item} id={id} key={item._id} />;
             })}
           </tbody>
         ) : (
@@ -95,7 +95,7 @@ const FormData = ({ type }) => {
           itemClass="border border-slate-300 flex items-center justify-center h-8 w-8 rounded-full"
           itemClassNext="bg-transparent text-gray-600 border-0 fill-slate-300"
           itemClassPrev="bg-transparent text-gray-600 border-0 rotate-180"
-          activeClass="bg-violet-500 text-white border-0 shadow-md"
+          activeClass="bg-deep-purple-500 text-white border-0 shadow-md"
           hideFirstLastPages
           onChange={(page) => handlePageChange(page)}
         />

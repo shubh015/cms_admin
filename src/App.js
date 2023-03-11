@@ -6,24 +6,22 @@ import { Navigate, Route, Routes } from "react-router-dom";
 import FormData from "./components/FormData";
 import PreviewForm from "./components/PreviewForm";
 import { useSelector } from "react-redux";
-import Search from "./components/SearchBar";
 import SearchPage from "./components/SearchPage";
-import "tw-elements/dist/js/index.min.js";
+
 function App() {
   const token = useSelector((state) => state.auth.token);
 
   if (!token) return <Navigate to="/auth" />;
 
   return (
-    <div className="dashboard_wrp flex font-[Poppins]">
+    <div className="dashboard_wrp h-screen flex font-[Poppins]">
       <Sidebar />
-      <div className="flex-1 overflow-hidden bg-[#edf0ff]">
+      <div className="flex-1 ml-60 bg-[#edf0ff]">
         <Header />
         <Routes>
           <Route path="" element={<Dashboard />} />
           <Route path="applicants" element={<FormData type="applicants" />} />
           <Route path="previewForm" element={<PreviewForm />} />
-          {/* <Route path="/search" element={<Search />}/> */}
           <Route path="/search" element={<SearchPage />} />
           <Route path="shortlisted" element={<FormData type="shortlisted" />} />
           <Route path="admin" element={<>Admin</>} />

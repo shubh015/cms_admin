@@ -9,6 +9,7 @@ import { Provider } from "react-redux";
 import { store, persistor } from "./redux/store";
 import { PersistGate } from "redux-persist/integration/react";
 import { Toaster } from "react-hot-toast";
+import { ThemeProvider } from "@material-tailwind/react";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 
@@ -16,7 +17,7 @@ root.render(
   <React.StrictMode>
     <Provider store={store}>
       <PersistGate persistor={persistor}>
-        <>
+        <ThemeProvider>
           <Toaster />
           <Router>
             <Routes>
@@ -24,7 +25,7 @@ root.render(
               <Route path="/auth/*" element={<Auth />} />
             </Routes>
           </Router>
-        </>
+        </ThemeProvider>
       </PersistGate>
     </Provider>
   </React.StrictMode>

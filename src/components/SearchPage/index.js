@@ -1,11 +1,9 @@
 import React from "react";
-import { useState } from "react";
-import { useEffect } from "react";
 import { useSelector } from "react-redux";
-import { getApplications } from "../../api/FormData";
 import LowerHeader from "../LowerHeader";
 import TableRow from "./TableRow";
-const ordersTableData = {
+
+const header = {
   header: [
     { id: 1, title: "Name" },
     { id: 2, title: "Id" },
@@ -16,38 +14,9 @@ const ordersTableData = {
     { id: 7, title: "Experience" },
     { id: 8, title: "Action" },
   ],
-  // row: [
-  //   {
-  //     id: "ONL/MAR23/89383",
-  //     name: "Deepak",
-  //     date: "13-MAR-2022",
-  //     contact: "9696076398",
-  //     category: "Non-Teaching",
-  //     designation: "IT",
-  //     experience: "45month",
-  //   },
-  //   {
-  //     id: "ONL/MAR23/89383",
-  //     name: "Aman",
-  //     date: "13-MAR-2022",
-  //     contact: "9696076398",
-  //     category: "Non-Teaching",
-  //     designation: "IT",
-  //     experience: "45month",
-  //   },
-  //   {
-  //     id: "ONL/MAR23/89383",
-  //     name: "Ayush",
-  //     date: "13-MAR-2022",
-  //     contact: "9696076398",
-  //     category: "Non-Teaching",
-  //     designation: "IT",
-  //     experience: "45month",
-  //   },
-  // ],
 };
 
-const SearchPage = ({ type }) => {
+const SearchPage = () => {
   const data = useSelector((state) => state.search.search);
 
   return (
@@ -64,7 +33,7 @@ const SearchPage = ({ type }) => {
                   id="SelectAll"
                 />
               </th>
-              {ordersTableData.header.map((each) => (
+              {header.header.map((each) => (
                 <th
                   key={each.id}
                   className="whitespace-nowrap text-center px-4 text-blue-500 text-base py-3"

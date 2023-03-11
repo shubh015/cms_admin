@@ -2,10 +2,10 @@ import React from "react";
 import { useState } from "react";
 import { useEffect } from "react";
 import { GoPlusSmall } from "react-icons/go";
-import { useSelector,  useDispatch } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { getDashboardData } from "../../api/Dashboard";
-import axios from 'axios';
-import {useNavigate} from 'react-router-dom'
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 import SearchSlice from "../../redux/features/SearchSlice";
 import DashboardCard from "../DashboardCard";
 import LowerHeader from "../LowerHeader";
@@ -14,7 +14,8 @@ const Dashboard = () => {
   const token = useSelector((state) => state.auth.token);
   const [cardData, setCardData] = useState([]);
   const dispatch = useDispatch();
-  const navigate = useNavigate()
+  const navigate = useNavigate();
+  
   useEffect(() => {
     (async () => {
       const res = await getDashboardData(token);
@@ -23,32 +24,10 @@ const Dashboard = () => {
     })();
   }, []);
 
-  const fetchData = async (title) => {
-    const response = await axios.get('');
-     console.log(response);
-     dispatch(SearchSlice(response.data));
-     navigate('/search')
-     
-   };
-  const handleSearch = (e) => {
-    e.preventDefault();
-   
-  }
-
   return (
-    <div className="dashboard_wrp h-[85%]">
-      {/* <div className="header flex justify-between items-center mt-6 px-2">
-        <h1 className="text-3xl font-bold">Dashboard</h1>
-        <div className="flex gap-4">
-          <input className="outline-0 p-2 rounded-full" type="text" onClick={handleSearch} onChange={(e) => (e.target.value)}/>
-          <button className="bg-blue-600 px-1 flex gap-1 items-center text-sm rounded-md text-white">
-            <GoPlusSmall />
-            Add New Applicant
-          </button>
-        </div>
-      </div> */}
+    <div className="dashboard_wrp h-full">
       <LowerHeader heading={"Dashboard"} />
-      <div class="flex justify-center items-center h-3/4 gap-10 px-4">
+      <div class="flex justify-center items-center h-3/4 gap-10 p-4">
         <DashboardCard
           to="/applicants"
           title="Applicants"

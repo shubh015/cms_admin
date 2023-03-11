@@ -13,7 +13,7 @@ export default function Sidebar() {
   };
 
   return (
-    <div className="flex">
+    <div className="flex fixed top-0 left-0 z-10 h-full">
       <div
         className={` w-60 flex flex-col p-3 bg-[#4241ff] shadow duration-300`}
       >

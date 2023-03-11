@@ -1,20 +1,25 @@
 import React from "react";
 import { useState } from "react";
 import toast from "react-hot-toast";
-import { AiOutlineCheck } from "react-icons/ai";
-import { AiOutlineDownload } from "react-icons/ai";
 import { useDispatch, useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { candidateShortlist } from "../../api/Dashboard";
 import { setForm } from "../../redux/features/ApplicationFormSlice";
-import PreviewForm from "../PreviewForm";
+// import PreviewForm from "../PreviewForm";
 import { IoCallOutline } from "react-icons/io5";
-import { GoMail } from "react-icons/go";
+import { GoMail, GoKebabHorizontal } from "react-icons/go";
+import {
+  Menu,
+  MenuHandler,
+  MenuList,
+  MenuItem,
+} from "@material-tailwind/react";
 
-const TableRow = ({ item }) => {
+const TableRow = ({ item, id }) => {
   const [isSelected, setIsSelected] = useState(false);
   const token = useSelector((state) => state.auth.token);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const handleApplication = (item) => {
     dispatch(setForm(item));
   };
@@ -24,16 +29,17 @@ const TableRow = ({ item }) => {
     console.log(res);
     if (res?.status === 200) {
       toast.success(res.data.msg);
+      navigate("/shortlisted");
     }
   };
 
   return (
     <tr
       className={`table-fixed ${
-        isSelected ? "border-l-2 border-blue-600 z-20" : ""
+        isSelected ? "border-l-2 border-blue-600" : ""
       }`}
     >
-      <td className="sticky inset-y-0 left-0 bg-white px-4 py-3">
+      <td className="left-0 bg-white px-4 py-3">
         <input
           className="h-4 w-4 cursor-pointer rounded border-gray-200 text-primary focus:ring-primary"
           type="checkbox"
@@ -49,7 +55,7 @@ const TableRow = ({ item }) => {
         />
         {`${item.personal_details.first_name} ${item.personal_details.middle_name} ${item.personal_details.last_name}`}
       </td>
-      <td className="text-center py-3 text-violet-500 font-medium">
+      <td className="text-center py-3 text-deep-purple-500 font-medium">
         {item?.registrationNum}
       </td>
       <td className="text-center py-3 text-gray-400">
@@ -59,31 +65,48 @@ const TableRow = ({ item }) => {
       <td className="text-center py-3 ">
         <div className="flex w-full items-center justify-center gap-2">
           <a
-            className="w-8 h-8 flex items-center justify-center rounded-full bg-violet-200"
+            className="w-8 h-8 flex items-center justify-center rounded-full bg-deep-purple-100"
             href={`tel:${item.personal_details.mobile}`}
           >
-            <IoCallOutline className="text-violet-700 text-lg" />
+            <IoCallOutline className="text-deep-purple-700 text-lg" />
           </a>
           <a
-            className="w-8 h-8 flex items-center justify-center rounded-full bg-violet-200"
+            className="w-8 h-8 flex items-center justify-center rounded-full bg-deep-purple-100"
             href={`mailto:${item.personal_details.email}`}
           >
-            <GoMail className="text-violet-700 text-lg" />
+            <GoMail className="text-deep-purple-700 text-lg" />
           </a>
         </div>
       </td>
       <td className="text-center py-3 capitalize">{item.category}</td>
       <td className="text-center py-3 ">{item.designation || "Teacher"}</td>
-      <td className="text-center py-3 ">{item.total_experience} month</td>
-      <td className="text-center py-3 ">
-        <div className="flex gap-2">
-          <button className="">
-            <AiOutlineCheck className="h-5 w-5" />
-          </button>
-          <Link onClick={() => handleApplication(item)} to="/previewForm">
-            <AiOutlineDownload className="h-5 w-5" />
-          </Link>
-        </div>
+      <td className="text-center py-3 ">{item.total_experience} Months</td>
+      <td className="text-center py-3">
+        <Menu placement="left">
+          <MenuHandler>
+            <button className="w-full h-full">
+              <GoKebabHorizontal className="inline text-gray-500" />
+            </button>
+          </MenuHandler>
+          <MenuList>
+            {!item.isShortlisted ? (
+              <MenuItem onClick={() => handleShortlist(item._id)}>
+                Shortlist
+              </MenuItem>
+            ) : (
+              <></>
+            )}
+            <MenuItem>
+              <Link
+                className="w-full h-full block"
+                onClick={() => handleApplication(item)}
+                to="/previewForm"
+              >
+                Preview
+              </Link>
+            </MenuItem>
+          </MenuList>
+        </Menu>
       </td>
     </tr>
   );
