@@ -18,6 +18,7 @@ import {
 const TableRow = ({ item, id }) => {
   const [isSelected, setIsSelected] = useState(false);
   const token = useSelector((state) => state.auth.token);
+  const user = useSelector((state) => state.auth.user);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const handleApplication = (item) => {
@@ -89,7 +90,7 @@ const TableRow = ({ item, id }) => {
             </button>
           </MenuHandler>
           <MenuList>
-            {!item.isShortlisted ? (
+            {!item.isShortlisted && user.role === "admin" ? (
               <MenuItem onClick={() => handleShortlist(item._id)}>
                 Shortlist
               </MenuItem>

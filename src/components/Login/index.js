@@ -14,8 +14,6 @@ export default function Login() {
 
   const handleLogin = async (data) => {
     const res = await axios.post(`${process.env.REACT_APP_URL}/login/`, data);
-    console.log(res);
-
     if (res?.status === 200) {
       dispatch(setToken(res.data.token));
       toast.success(res.data.msg || "Successfully LoggedIn!");

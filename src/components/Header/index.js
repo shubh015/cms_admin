@@ -6,9 +6,6 @@ const Header = () => {
   return (
     <div className="header_wrp bg-white sticky left-0 top-0 p-3 flex gap-3 justify-end items-center w-full py-5">
       <div className="icon text-2xl text-gray-400">
-        <BiSearchAlt2 />
-      </div>
-      <div className="icon text-2xl text-gray-400">
         <HiBell />
       </div>
       <div className="icon text-2xl text-gray-400">

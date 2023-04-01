@@ -10,6 +10,7 @@ import { RiArrowDropDownLine } from "react-icons/ri";
 
 const LowerHeader = ({ heading }) => {
   const token = useSelector((state) => state.auth.token);
+  const user = useSelector((state) => state.auth.user);
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [type, setType] = useState("name");
@@ -42,7 +43,7 @@ const LowerHeader = ({ heading }) => {
               onChange={(e) => setQuery(e.target.value)}
             />
 
-            <button
+            {/* <button
               type="button"
               id="dropdownMenuButton3"
               data-te-dropdown-toggle-ref
@@ -51,22 +52,24 @@ const LowerHeader = ({ heading }) => {
               data-te-ripple-color="light"
             >
               <RiArrowDropDownLine />
-            </button>
+            </button> */}
 
-            <ul
+            {/* <ul
               className="absolute z-[1000] ml-[-43px] mt-1 float-left m-0 hidden min-w-max list-none overflow-hidden rounded-lg border-none bg-white bg-clip-padding text-left text-base shadow-lg dark:bg-neutral-700 [&[data-te-dropdown-show]]:block"
               aria-labelledby="dropdownMenuButton3"
               data-te-dropdown-menu-ref
             >
               <li>By Name</li>
               <li>By Id</li>
-            </ul>
+            </ul> */}
           </div>
         </form>
-        <button className="bg-blue-600 px-1 flex gap-1 items-center text-sm rounded-md text-white">
-          <GoPlusSmall />
-          Add New Applicant
-        </button>
+        {user?.role === "admin" && (
+          <button className="bg-blue-600 px-1 flex gap-1 items-center text-sm rounded-md text-white">
+            <GoPlusSmall />
+            Add New Applicant
+          </button>
+        )}
       </div>
     </div>
   );

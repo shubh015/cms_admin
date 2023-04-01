@@ -4,9 +4,12 @@ import { RiDashboardFill, RiAdminFill, RiLogoutBoxLine } from "react-icons/ri";
 import logo from "../../assets/image/logo.png";
 import { useDispatch } from "react-redux";
 import { removeToken } from "../../redux/features/AuthSlice";
+import { useSelector } from "react-redux";
 
 export default function Sidebar() {
   const dispatch = useDispatch();
+
+  const user = useSelector((state) => state.auth.user);
 
   const handleLogout = () => {
     dispatch(removeToken());
@@ -37,15 +40,19 @@ export default function Sidebar() {
                   <span className="text-white text-lg">Dashboard</span>
                 </Link>
               </li>
-              <li className="rounded-sm">
-                <Link
-                  to="/admin"
-                  className="flex items-center p-2 text-white space-x-3 rounded-md"
-                >
-                  <RiAdminFill className="text-2xl text-white" />
-                  <span className="text-white text-lg">Admin</span>
-                </Link>
-              </li>
+             {
+                user.role === "admin" && (
+                  <li className="rounded-sm">
+                  <Link
+                    to="/admin"
+                    className="flex items-center p-2 text-white space-x-3 rounded-md"
+                  >
+                    <RiAdminFill className="text-2xl text-white" />
+                    <span className="text-white text-lg">Admin</span>
+                  </Link>
+                </li>
+                )
+             }
               <li className="rounded-sm">
                 <span
                   onClick={handleLogout}

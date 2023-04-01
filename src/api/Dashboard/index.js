@@ -30,6 +30,20 @@ export const getDashboardData = async (token) => {
   }
 };
 
+export const getUserData = async (token) => {
+  try {
+    const res = await axios.get(`/me/`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    return res;
+  } catch (error) {
+    return error;
+  }
+};
+
 export const candidateShortlist = async (id, token) => {
   try {
     const res = await axios.patch(

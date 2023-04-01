@@ -1,24 +1,27 @@
 import React from "react";
 import { useState } from "react";
 import { useEffect } from "react";
-import { GoPlusSmall } from "react-icons/go";
 import { useSelector, useDispatch } from "react-redux";
-import { getDashboardData } from "../../api/Dashboard";
-import axios from "axios";
+import { getDashboardData, getUserData } from "../../api/Dashboard";
 import { useNavigate } from "react-router-dom";
-import SearchSlice from "../../redux/features/SearchSlice";
 import DashboardCard from "../DashboardCard";
 import LowerHeader from "../LowerHeader";
+import { setUser } from "../../redux/features/AuthSlice";
 
 const Dashboard = () => {
   const token = useSelector((state) => state.auth.token);
   const [cardData, setCardData] = useState([]);
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  
+
   useEffect(() => {
     (async () => {
+      const user = await getUserData(token);
+      if (user.status === 200) {
+        dispatch(setUser(user.data.user));
+      }
       const res = await getDashboardData(token);
+
       console.log(res);
       setCardData(res);
     })();

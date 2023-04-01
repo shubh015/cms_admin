@@ -10,6 +10,7 @@ import SearchPage from "./components/SearchPage";
 
 function App() {
   const token = useSelector((state) => state.auth.token);
+  const user = useSelector((state) => state.auth.user);
 
   if (!token) return <Navigate to="/auth" />;
 
@@ -24,7 +25,7 @@ function App() {
           <Route path="previewForm" element={<PreviewForm />} />
           <Route path="/search" element={<SearchPage />} />
           <Route path="shortlisted" element={<FormData type="shortlisted" />} />
-          <Route path="admin" element={<>Admin</>} />
+          {user.role === "admin" && <Route path="admin" element={<>Admin</>} />}
         </Routes>
       </div>
     </div>
