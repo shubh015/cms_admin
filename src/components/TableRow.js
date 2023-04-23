@@ -3,8 +3,8 @@ import { useState } from "react";
 import toast from "react-hot-toast";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
-import { candidateShortlist } from "../../api/Dashboard";
-import { setForm } from "../../redux/features/ApplicationFormSlice";
+import { candidateShortlist } from "../api/Dashboard";
+import { setForm } from "../redux/features/ApplicationFormSlice";
 // import PreviewForm from "../PreviewForm";
 import { IoCallOutline } from "react-icons/io5";
 import { GoMail, GoKebabHorizontal } from "react-icons/go";
@@ -13,9 +13,10 @@ import {
   MenuHandler,
   MenuList,
   MenuItem,
+  Tooltip,
 } from "@material-tailwind/react";
 
-const TableRow = ({ item, id }) => {
+const TableRow = ({ item, id, handleOpen }) => {
   const [isSelected, setIsSelected] = useState(false);
   const token = useSelector((state) => state.auth.token);
   const user = useSelector((state) => state.auth.user);
@@ -37,7 +38,7 @@ const TableRow = ({ item, id }) => {
   return (
     <tr
       className={`table-fixed ${
-        isSelected ? "border-l-2 border-blue-600" : ""
+        isSelected ? "border-l-2 !border-l-blue-600" : ""
       }`}
     >
       <td className="left-0 bg-white px-4 py-3">
@@ -60,7 +61,7 @@ const TableRow = ({ item, id }) => {
         {item?.registrationNum}
       </td>
       <td className="text-center py-3 text-gray-400">
-        {new Date(item.updatedAt).toISOString().slice(0, 10)}
+        {new Date(item.createdAt).toISOString().slice(0, 10)}
       </td>
       {/* {item.personal_details.mobile} */}
       <td className="text-center py-3 ">
@@ -82,6 +83,23 @@ const TableRow = ({ item, id }) => {
       <td className="text-center py-3 capitalize">{item.category}</td>
       <td className="text-center py-3 ">{item.designation || "Teacher"}</td>
       <td className="text-center py-3 ">{item.total_experience} Months</td>
+      <td className="text-center py-3 ">
+        {item.paymentConfirmation ? (
+          <Tooltip
+            content="Click to show"
+            animate={{
+              mount: { scale: 1, y: 0 },
+              unmount: { scale: 0, y: 25 },
+            }}
+          >
+            <button onClick={() => handleOpen(item.paymentData)}>
+              Confirmed
+            </button>
+          </Tooltip>
+        ) : (
+          "Pending"
+        )}
+      </td>
       <td className="text-center py-3">
         <Menu placement="left">
           <MenuHandler>
@@ -91,7 +109,10 @@ const TableRow = ({ item, id }) => {
           </MenuHandler>
           <MenuList>
             {!item.isShortlisted && user.role === "admin" ? (
-              <MenuItem onClick={() => handleShortlist(item._id)}>
+              <MenuItem
+                disabled={!item.paymentConfirmation}
+                onClick={() => handleShortlist(item._id)}
+              >
                 Shortlist
               </MenuItem>
             ) : (

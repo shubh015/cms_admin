@@ -29,8 +29,7 @@ const Dashboard = () => {
 
   return (
     <div className="dashboard_wrp h-full">
-      <LowerHeader heading={"Dashboard"} />
-      <div class="flex justify-center items-center h-3/4 gap-10 p-4">
+      <div class="flex justify-center items-center h-3/4 gap-10 px-4 pt-32">
         <DashboardCard
           to="/applicants"
           title="Applicants"

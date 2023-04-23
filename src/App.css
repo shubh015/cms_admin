@@ -2,10 +2,11 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: "poppins", sans-serif;
+  font-family: "Poppins", sans-serif;
 }
-body {
-  min-height: 100vh;
+body,html {
+  height: 100%;
+  width: 100%;
 }
 
 .text-\[1\.2rem\] {

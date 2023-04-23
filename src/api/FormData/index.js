@@ -28,3 +28,17 @@ export const getApplications = async (token, type, pageNumber, pageSize) => {
     return error;
   }
 };
+
+export const getAllApplicants = async (token) => {
+  try {
+    const res = await axios.get("/admin/get-all-data", {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    return res;
+  } catch (error) {
+    return error;
+  }
+};
