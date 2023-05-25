@@ -4,20 +4,21 @@ import { RiDashboardFill, RiAdminFill, RiLogoutBoxLine } from "react-icons/ri";
 import logo from "../../assets/image/logo.png";
 import { useDispatch } from "react-redux";
 import { removeToken } from "../../redux/features/AuthSlice";
+import { useSelector } from "react-redux";
 
 export default function Sidebar() {
+  const dispatch = useDispatch();
 
-  const dispatch = useDispatch()
+  const user = useSelector((state) => state.auth.user);
 
   const handleLogout = () => {
-    dispatch(removeToken())
-    
-  }
+    dispatch(removeToken());
+  };
 
   return (
-    <div className="flex">
+    <div className="flex fixed top-0 left-0 z-10 h-full">
       <div
-        className={` w-60 flex flex-col h-screen p-3 bg-[#4241ff] shadow duration-300`}
+        className={` w-60 flex flex-col p-3 bg-[#4241ff] shadow duration-300`}
       >
         <div className="space-y-3">
           <div className="flex items-center justify-between">
@@ -39,17 +40,24 @@ export default function Sidebar() {
                   <span className="text-white text-lg">Dashboard</span>
                 </Link>
               </li>
+             {
+                user.role === "admin" && (
+                  <li className="rounded-sm">
+                  <Link
+                    to="/admin"
+                    className="flex items-center p-2 text-white space-x-3 rounded-md"
+                  >
+                    <RiAdminFill className="text-2xl text-white" />
+                    <span className="text-white text-lg">Admin</span>
+                  </Link>
+                </li>
+                )
+             }
               <li className="rounded-sm">
-                <Link
-                  to="/admin"
-                  className="flex items-center p-2 text-white space-x-3 rounded-md"
+                <span
+                  onClick={handleLogout}
+                  className="flex items-center p-2 cursor-pointer text-white space-x-3 rounded-md"
                 >
-                  <RiAdminFill className="text-2xl text-white" />
-                  <span className="text-white text-lg">Admin</span>
-                </Link>
-              </li>
-              <li className="rounded-sm">
-                <span onClick={handleLogout} className="flex items-center p-2 cursor-pointer text-white space-x-3 rounded-md">
                   <RiLogoutBoxLine className="text-2xl text-white" />
                   <span className="text-white text-lg">Logout</span>
                 </span>

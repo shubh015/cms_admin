@@ -8,7 +8,7 @@ const DashboardCard = ({ value, title, to }) => {
   return (
     <Link
       to={to}
-      class="dashboard_card rounded-lg flex flex-col items-center justify-between shadow-md bg-white w-64 h-[60%]"
+      class="dashboard_card rounded-lg flex flex-col items-center justify-between shadow-md bg-white w-64 h-[17rem]"
     >
       <div className="mx-auto flex-1 flex items-center flex-col justify-center gap-3">
         <CircularProgressbar

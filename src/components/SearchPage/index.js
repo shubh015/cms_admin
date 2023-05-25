@@ -1,12 +1,6 @@
-import React, { useRef } from "react";
-import { useState } from "react";
-import { useEffect } from "react";
+import React, { useState } from "react";
 import { useSelector } from "react-redux";
-import { getApplications, getAllApplicants } from "../../api/FormData";
 import TableRow from "../TableRow";
-import { BiPlay } from "react-icons/bi";
-import Pagination from "react-js-pagination";
-import { CSVLink } from "react-csv";
 import {
   Dialog,
   Button,
@@ -15,7 +9,7 @@ import {
   DialogFooter,
 } from "@material-tailwind/react";
 
-const ordersTableData = {
+const header = {
   header: [
     { id: 1, title: "Name" },
     { id: 2, title: "Id" },
@@ -29,7 +23,7 @@ const ordersTableData = {
   ],
 };
 
-const header = {
+const paymentHeader = {
   header: [
     { id: 1, title: "Sn." },
     { id: 2, title: "OrderId" },
@@ -40,42 +34,11 @@ const header = {
   ],
 };
 
-const headers = [
-  // { label: "Mobile", key: "phone_number" },
-  // { label: "Score", key: "score" },
-  // { label: "Data&Time", key: "date_and_time" },
-];
-
-const FormData = ({ type }) => {
-  const csvDownloadRef = useRef();
-  const [data, setData] = useState([]);
-  const [all_data, setAll_data] = useState([]);
-  const [pageNumber, setPageNumber] = useState(1);
-  const [pageSize] = useState(10);
-  const [count, setCount] = useState(0);
+const SearchPage = () => {
+  const data = useSelector((state) => state.search.search);
   const [isLoading, setIsLoading] = useState(false);
   const [open, setOpen] = useState(false);
-  const [paymentData, setPaymentData] = useState("");
-
-  const token = useSelector((state) => state.auth.token);
-  const handlePageChange = (page) => {
-    setPageNumber(page);
-  };
-
-  useEffect(() => {
-    (async () => {
-      setIsLoading(true);
-      const res = await getApplications(token, type, pageNumber, pageSize);
-      const res_all = await getAllApplicants(token);
-      setIsLoading(false);
-
-      if (res?.status === 200) {
-        setData(res.data.data);
-        setAll_data(res_all.data.allApplicants);
-        setCount(res.data.total_count);
-      }
-    })();
-  }, [pageNumber, pageSize, token, type]);
+  const [paymentData, setPaymentData] = useState();
 
   const handleOpen = (paymentData) => {
     setOpen((prev) => !prev);
@@ -85,23 +48,6 @@ const FormData = ({ type }) => {
   return (
     <>
       <div className="overflow-hidden w-[90%] bg-white mt-10 mx-auto overflow-x-auto rounded-lg border border-gray-200">
-        <div className="flex justify-end border-b-gray-100 border items-center p-2">
-          <CSVLink
-            headers={headers}
-            data={all_data}
-            filename="applicants.csv"
-            className="hidden"
-            ref={csvDownloadRef}
-            target="_blank"
-          />
-
-          <button
-            onClick={() => csvDownloadRef.current.link.click()}
-            className="bg-blue-600 text-white hover:bg-blue-700 p-2 rounded-md"
-          >
-            Export
-          </button>
-        </div>
         <table className="min-w-full divide-y divide-gray-100 text-sm">
           <thead>
             <tr className="text-left text-darken">
@@ -112,7 +58,7 @@ const FormData = ({ type }) => {
                   id="SelectAll"
                 />
               </th>
-              {ordersTableData.header.map((each) => (
+              {header.header.map((each) => (
                 <th
                   key={each.id}
                   className="whitespace-nowrap text-center text-blue-500 py-3"
@@ -143,29 +89,6 @@ const FormData = ({ type }) => {
             </tbody>
           )}
         </table>
-        <div className="flex justify-between item p-2 w-full">
-          <p className="text-sm text-gray-400">
-            Showing {pageNumber * pageSize - (pageSize - data.length)} out of
-            &nbsp;
-            {count}
-          </p>
-          <Pagination
-            activePage={pageNumber}
-            itemsCountPerPage={pageSize}
-            totalItemsCount={count}
-            pageRangeDisplayed={5}
-            prevPageText={<BiPlay />}
-            nextPageText={<BiPlay />}
-            innerClass="flex gap-2"
-            itemClass="border border-slate-300 flex items-center justify-center h-8 w-8 rounded-full"
-            itemClassNext="bg-transparent text-gray-600 border-0 fill-slate-300"
-            itemClassPrev="bg-transparent text-gray-600 border-0 rotate-180"
-            activeClass="bg-deep-purple-500 text-white border-0 shadow-md"
-            hideFirstLastPages
-            onChange={(page) => handlePageChange(page)}
-          />
-        </div>
-
         <Dialog
           size="xxl"
           className="!w-full !min-w-full !max-w-full"
@@ -177,7 +100,7 @@ const FormData = ({ type }) => {
             <table className="min-w-full divide-y divide-gray-100 text-sm">
               <thead className="bg-gray-100 sticky top-0 left-0">
                 <tr className="font-medium text-left text-darken">
-                  {header.header.map((each) => (
+                  {paymentHeader.header.map((each) => (
                     <th
                       key={each.id}
                       className="whitespace-nowrap text-center px-4 text-blue-500 text-base py-3"
@@ -244,4 +167,4 @@ const FormData = ({ type }) => {
   );
 };
 
-export default FormData;
+export default SearchPage;

@@ -1,10 +1,12 @@
-import React from "react";
+﻿import React from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
+import toast from "react-hot-toast";
 import { useDispatch } from "react-redux";
 import { setToken } from "../../redux/features/AuthSlice";
+import colorlogo from "../../assets/image/color-logo.jpg";
 
 export default function Login() {
   const navigate = useNavigate();
@@ -12,9 +14,9 @@ export default function Login() {
 
   const handleLogin = async (data) => {
     const res = await axios.post(`${process.env.REACT_APP_URL}/login/`, data);
-
     if (res?.status === 200) {
       dispatch(setToken(res.data.token));
+      toast.success(res.data.msg || "Successfully LoggedIn!");
       navigate("/");
     }
   };
@@ -37,10 +39,13 @@ export default function Login() {
   });
 
   return (
-    <div className="relative flex flex-col justify-center min-h-screen overflow-hidden">
-      <div className="w-full p-6 m-auto bg-white rounded-md shadow-md lg:max-w-xl">
-        <h1 className="text-3xl font-semibold text-center text-blue-700">
-          Log In
+    <div className="relative flex flex-col justify-center min-h-screen overflow-hidden border bg-slate-50 ">
+      <div className="w-full py-14 px-6 m-auto bg-white rounded-lg shadow-md lg:max-w-xl">
+        <div className="flex justify-center">
+          <img alt="" className="h-14" src={colorlogo} />
+        </div>
+        <h1 className="text-center text-2xl font-extrabold text-gray-900 m-9">
+          Log In To Your Acount
         </h1>
         <form className="mt-6">
           <div className="mb-2">
@@ -83,9 +88,9 @@ export default function Login() {
                 : ""}
             </span>
           </div>
-          <Link to="/" className="text-xs text-blue-600 hover:underline">
+          {/* <Link to="/" className="text-xs text-blue-600 hover:underline">
             Forget Password?
-          </Link>
+          </Link> */}
           <div className="mt-6">
             <button
               onClick={formik.handleSubmit}

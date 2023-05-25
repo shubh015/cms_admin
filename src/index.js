@@ -8,6 +8,8 @@ import Auth from "./Auth";
 import { Provider } from "react-redux";
 import { store, persistor } from "./redux/store";
 import { PersistGate } from "redux-persist/integration/react";
+import { Toaster } from "react-hot-toast";
+import { ThemeProvider } from "@material-tailwind/react";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 
@@ -15,12 +17,15 @@ root.render(
   <React.StrictMode>
     <Provider store={store}>
       <PersistGate persistor={persistor}>
-        <Router>
-          <Routes>
-            <Route path="/*" element={<App />} />
-            <Route path="/auth/*" element={<Auth />} />
-          </Routes>
-        </Router>
+        <ThemeProvider>
+          <Toaster />
+          <Router>
+            <Routes>
+              <Route path="/*" element={<App />} />
+              <Route path="/auth/*" element={<Auth />} />
+            </Routes>
+          </Router>
+        </ThemeProvider>
       </PersistGate>
     </Provider>
   </React.StrictMode>
