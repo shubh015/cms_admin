@@ -83,23 +83,29 @@ const TableRow = ({ item, id, handleOpen }) => {
       <td className="text-center py-3 capitalize">{item.category}</td>
       <td className="text-center py-3 ">{item.designation || "Teacher"}</td>
       <td className="text-center py-3 ">{item.total_experience} Months</td>
-      <td className="text-center py-3 ">
-        {item.paymentConfirmation ? (
-          <Tooltip
-            content="Click to show"
-            animate={{
-              mount: { scale: 1, y: 0 },
-              unmount: { scale: 0, y: 25 },
-            }}
-          >
-            <button onClick={() => handleOpen(item.paymentData)}>
-              Confirmed
-            </button>
-          </Tooltip>
-        ) : (
-          "Pending"
-        )}
-      </td>
+      {user.role !== "admin" && (
+        <td className="text-center py-3 ">
+          {item.paymentConfirmation ? (
+            <Tooltip
+              content="Click to show"
+              animate={{
+                mount: { scale: 1, y: 0 },
+                unmount: { scale: 0, y: 25 },
+              }}
+            >
+              <button onClick={() => handleOpen(item.paymentData)}>
+                Confirmed
+              </button>
+            </Tooltip>
+          ) : (
+            "Pending"
+          )}
+        </td>
+      )}
+
+      {user.role === "helpdesk" && (
+        <td className="text-center py-3 ">{`${item.address.current.city} ${item.address.current.pincode}`}</td>
+      )}
       <td className="text-center py-3">
         <Menu placement="left">
           <MenuHandler>

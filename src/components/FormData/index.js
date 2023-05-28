@@ -25,7 +25,8 @@ const ordersTableData = {
     { id: 6, title: "Designation" },
     { id: 7, title: "Experience" },
     { id: 8, title: "Payment" },
-    { id: 9, title: "Action" },
+    { id: 8, title: "Address" },
+    { id: 10, title: "Action" },
   ],
 };
 
@@ -40,12 +41,6 @@ const header = {
   ],
 };
 
-const headers = [
-  // { label: "Mobile", key: "phone_number" },
-  // { label: "Score", key: "score" },
-  // { label: "Data&Time", key: "date_and_time" },
-];
-
 const FormData = ({ type }) => {
   const csvDownloadRef = useRef();
   const [data, setData] = useState([]);
@@ -56,7 +51,7 @@ const FormData = ({ type }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [open, setOpen] = useState(false);
   const [paymentData, setPaymentData] = useState("");
-
+  const user = useSelector((state) => state.auth.user);
   const token = useSelector((state) => state.auth.token);
   const handlePageChange = (page) => {
     setPageNumber(page);
@@ -87,7 +82,7 @@ const FormData = ({ type }) => {
       <div className="overflow-hidden w-[90%] bg-white mt-10 mx-auto overflow-x-auto rounded-lg border border-gray-200">
         <div className="flex justify-end border-b-gray-100 border items-center p-2">
           <CSVLink
-            headers={headers}
+            headers={[]}
             data={all_data}
             filename="applicants.csv"
             className="hidden"
@@ -112,14 +107,22 @@ const FormData = ({ type }) => {
                   id="SelectAll"
                 />
               </th>
-              {ordersTableData.header.map((each) => (
-                <th
-                  key={each.id}
-                  className="whitespace-nowrap text-center text-blue-500 py-3"
-                >
-                  {each.title}
-                </th>
-              ))}
+              {ordersTableData.header.map((each) => {
+                if (each.title === "Payment" && user.role === "admin")
+                  return <></>;
+
+                if (each.title === "Address" && user.role !== "helpdesk")
+                  return <></>;
+
+                return (
+                  <th
+                    key={each.id}
+                    className="whitespace-nowrap text-center text-blue-500 py-3"
+                  >
+                    {each.title}
+                  </th>
+                );
+              })}
             </tr>
           </thead>
           {!isLoading ? (
